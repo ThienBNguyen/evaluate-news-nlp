@@ -15,7 +15,7 @@ function handleSubmit(event) {
         },
         body: JSON.stringify({ url: formText }),
     };
-    fetch('http://localhost:8080/api', options)
+    fetch('/api', options)
         .then(res => res.json())
         .then(function (res) {
             document.getElementById('polarity').innerHTML = res.polarity;

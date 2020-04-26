@@ -43,7 +43,7 @@ app.post('/api', function (req, res) {
             res.send(projecData);
             console.log(projecData)
         } else {
-            console.log('error', error)
+            res.send(res)
         }
     }
     )
