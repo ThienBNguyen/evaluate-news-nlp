@@ -2,6 +2,11 @@ const dotenv = require('dotenv');
 dotenv.config();
 var path = require('path')
 const express = require('express')
+const app = express()
+const bodyPaser = require("body-parser")
+app.use(bodyPaser.urlencoded({
+    extended: true
+}))
 const mockAPIResponse = require('./mockAPI.js')
 var aylien = require('aylien_textapi');
 // set aylien API credentias
@@ -10,7 +15,7 @@ var textapi = new aylien({
     application_key: process.env.API_KEY,
 });
 console.log(`Your API key is ${process.env.API_KEY}`);
-const app = express()
+
 
 app.use(express.static('dist'))
 
@@ -29,9 +34,10 @@ app.listen(8080, function () {
 app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
 })
-let projecData = {};
-app.post('/api', function (req, res) {
-    textapi.sentiment({ url: req.body.url, mode: document }, (error, res) => {
+let projectData = {};
+app.post('/api', function (request, response) {
+    console.log(request.body)
+    textapi.sentiment({ url: req.body.url, }, (error, res) => {
         if (error === null) {
             projectData = {
                 polarity: res.polarity,
@@ -40,10 +46,10 @@ app.post('/api', function (req, res) {
                 polarity_confidence: res.polarity_confidence,
                 subjectivity_confidence: res.subjectivity_confidence,
             };
-            res.send(projecData);
-            console.log(projecData)
+            response.send(projectData);
+            console.log(projectData)
         } else {
-            res.send(res)
+            response.send(error)
         }
     }
     )

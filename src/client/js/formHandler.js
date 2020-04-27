@@ -11,7 +11,7 @@ function handleSubmit(event) {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
-            'content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({ url: formText }),
     };
@@ -20,6 +20,7 @@ function handleSubmit(event) {
         .then(function (res) {
             document.getElementById('polarity').innerHTML = res.polarity;
             document.getElementById('subjectivity').innerHTML = res.subjectivity;
+            document.getElementById('text').innerHTML = res.text;
             document.getElementById('pol-con').innerHTML = res.polarity_confidence;
             document.getElementById('subj-con').innerHTML =
                 res.subjectivity_confidence;
